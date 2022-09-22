@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Covid Registration System</title>
+
+    <div th:replace="fragments/stylesheets :: stylesheets"></div>
+</head>
+
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <section class="min-vh-100 d-flex align-items-center bg-soft">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 d-flex align-items-center justify-content-center">
+                    <div
+                        class="signin-inner mt-3 mt-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+                        <div class="text-center text-md-center mb-4 mt-md-0">
+                            <h1 class="mb-0 h3">Covid Registration System</h1>
+                        </div>
+                        <form name='f' th:action="@{/login}" th:object="${userLogin}" method='POST' class="mt-4">
+                            <!-- Form -->
+                            <div class="form-group">
+                                <label for="userName">Username</label>
+                                <h6 th:text=" ${error} ? ${error} : '' " class="${error} ? text-danger : '' "></h6>
+                                <div class="input-group mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><span class="fas fa-user"></span></span>
+                                    </div>
+                                    <input class="form-control" id="userName" name="userName" placeholder="John Doe"
+                                        type="text" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <div class="input-group mb-4">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><span
+                                                    class="fas fa-unlock-alt"></span></span>
+                                        </div>
+                                        <input class="form-control" id="password" placeholder="Password" type="password"
+                                            name="password" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-block btn-primary">Sign in</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div th:replace="fragments/scripts :: scripts"></div>
+</body>
+
+</html>

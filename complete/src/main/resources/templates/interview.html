@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Covid Registration System</title>
+
+    <div th:replace="fragments/stylesheets :: stylesheets"></div>
+</head>
+
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="container py-4">
+        <h1>Patient Status Page (On-site Testing)</h1>
+        <form name='f' th:action="@{/interview}" th:object="${interviewForm}" method='POST'>
+            <table class="table">
+                <tr>
+                    <td>PinCode:</td>
+                    <td>
+                        <input type="text" class="form-control" th:value="${pinCode}" disabled>
+                        <input type="hidden" class="form-control" id="pinCode" name="pinCode" th:value="${pinCode}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Patient:</td>
+                    <td>
+                        <input type="text" class="form-control" th:value="${patientName}" disabled>
+                        <input type="hidden" class="form-control" id="patient" name="patient" th:value="${patientId}">
+                    <td>
+                </tr>
+                <tr>
+                    <td>Administerer:</td>
+                    <td>
+                        <input type="text" class="form-control" th:value="${administerer.getFullName()}" disabled>
+                        <input type="hidden" class="form-control" id="administerer" name="administerer"
+                            th:value="${administerer.getId()}">
+                    <td>
+                </tr>
+                <tr>
+                    <td>1. Do you have chills and repeated shaking?</td>
+                    <td>
+                        <input type="checkbox" th:field="*{shaking}" id="myCheck">
+                    <td>
+                </tr>
+                <tr>
+                    <td>2. Do you have muscle pain?</td>
+                    <td>
+                        <input type="checkbox" th:field="*{musclePain}" id="myCheck1">
+                    <td>
+                </tr>
+                <tr>
+                    <td>3. Do you have headache?</td>
+                    <td>
+                        <input type="checkbox" th:field="*{headache}" id="myCheck2">
+                    <td>
+                </tr>
+                <tr>
+                    <td>4. Do you have sore throat?</td>
+                    <td>
+                        <input type="checkbox" th:field="*{soreThroat}" id="myCheck3">
+                    <td>
+                </tr>
+                <tr>
+                    <td>5. Do you have loss of sense of taste or smell?</td>
+                    <td>
+                        <input type="checkbox" th:field="*{lossTasteAndSmell}" id="myCheck4">
+                    <td>
+                </tr>
+                <tr>
+                    <td>6. Do you have close contact with other covid patient?</td>
+                    <td>
+                        <input type="checkbox" th:field="*{closeContact}" id="myCheck5">
+                    <td>
+                </tr>
+                <tr>
+                    <td>Test-type:</td>
+                    <td>
+                        <select th:field="*{testType}" id="heyman" onchange="myFunction()"
+                            class="custom-select my-1 mr-sm-2">
+                            <option th:each="testType : ${testTypeList}" th:value="${testType}" th:text="${testType}" />
+                        </select>
+                    <td>
+                </tr>
+                <tr>
+                    <td><input class="btn btn-primary" name="submit" type="submit" value="submit" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <!-- <p>Get your greeting <a href="/greeting">here</a></p> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        function myFunction() {
+            // Get the checkbox
+            var checkBox = document.getElementById("myCheck");
+            var checkBox1 = document.getElementById("myCheck1");
+            var checkBox2 = document.getElementById("myCheck2");
+            var checkBox3 = document.getElementById("myCheck3");
+            var checkBox4 = document.getElementById("myCheck4");
+            var checkBox5 = document.getElementById("myCheck5");
+
+            // If the checkbox is checked, display the output text
+            if (checkBox.checked == true || checkBox1.checked == true || checkBox2.checked == true || checkBox3.checked == true || checkBox4.checked == true || checkBox5.checked == true) {
+                alert("PCR is recommended when you have more than one checked check box ¯\_( ͡❛ ͜ʖ ͡❛)_/¯")
+            }
+        }
+    </script>
+</body>
+
+</html>

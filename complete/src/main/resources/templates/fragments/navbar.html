@@ -1,0 +1,59 @@
+<div th:fragment="navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Covid Registration</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a href="/browse" class="nav-link">Browse</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/register" class="nav-link">Onsite Booking</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/interview" class="nav-link">Interview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/bookingStatus" class="nav-link">Booking Status</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/homeBooking" class="nav-link">Online Booking</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/scanQRCode" class="nav-link">Scan QR</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/adminPanel" class="nav-link">Admin Panel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/realTimeBookingInfoPage" class="nav-link">Real-Time Booking</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/phonecall" class="nav-link">Phone Call</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <!-- <li class="nav-item">
+                        <a href="/logout" class="nav-link">Logout</a>
+                    </li> -->
+                    <!-- <li class="nav-item">
+                        <a href="/login" class="nav-link">Login</a>
+                    </li> -->
+                    <li class="nav-item dropdown">
+                        <a href="/login" class="nav-link dropdown-toggle">
+                            Login
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/profile">Profile</a>
+                            <a class="dropdown-item" href="/searchByID">Search By BookingID</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>

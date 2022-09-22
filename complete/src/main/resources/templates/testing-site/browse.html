@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Covid Registration System</title>
+
+    <div th:replace="fragments/stylesheets :: stylesheets"></div>
+</head>
+
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="container">
+        <div class="section section-lg pt-4">
+            <div class="container">
+                <div class="row mb-4 mb-lg-5">
+                    <div class="col-lg-4 col-sm-6">
+                        <form name='f' th:action="@{/search}" th:object="${browseForm}" method="POST">
+                            <!-- Form -->
+                            <label for="suburbName">Suburb Name</label>
+                            <div class="input-group">
+                                <input type="text" placeholder="What are looking for?" class="form-control"
+                                    id="suburbName" name="suburbName" th:value="${suburbName}">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary input-group-text">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- End of Form -->
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <!-- Form -->
+                        <div class="form-group">
+                            <label class="my-1 mr-2" for="typeOfFacility">Type Of Facility</label>
+                            <form th:action="@{/select}" th:object="${browseForm}" method="POST">
+                                <div class="input-group">
+                                    <select class="custom-select my-1 mr-sm-2" id="typeOfFacility" name="typeOfFacility"
+                                        th:value="${typeOfFacility}">
+                                        <option value="Drive-Through">Drive-Through</option>
+                                        <option value="Walk-in">Walk-in</option>
+                                        <option value="Clinics">Clinics</option>
+                                        <option value="GPs">GPs</option>
+                                        <option value="Hospitals">Hospitals</option>
+                                    </select>
+                                    <div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- End of Form -->
+                    </div>
+                    <div class="col-lg-4 col-sm-6 mt-4">
+                        <a href="/browse" class="btn btn-primary">Clear Filter</a>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Testing Site Name</th>
+                                <th scope="col">Type of Facility</th>
+                                <th scope="col">On Site Booking and Testing</th>
+                                <th scope="col">Waiting Times</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody th:each="testingSite : ${testingSiteList}">
+                            <tr>
+                                <td th:text="${testingSite.getName()}"></td>
+                                <td th:text="${testingSite.getAdditonalInfo().getTypeOfFacility()}"></td>
+                                <td
+                                    th:text="${testingSite.getAdditonalInfo().isOnSiteBookingAndTesting() ? 'Yes' : 'No'}">
+                                </td>
+                                <td th:text="${testingSite.getAdditonalInfo().getWaitingTimeInMins()}+ ' mins'"></td>
+                                <td th:text="${testingSite.getAdditonalInfo().getOpenOrClosed()}"></td>
+                                <td>
+                                    <a th:href="@{/show/{id}(id=${testingSite.getId()})}"
+                                        class="btn btn-primary">View</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="fragments/scripts :: scripts"></div>
+</body>
+
+</html>

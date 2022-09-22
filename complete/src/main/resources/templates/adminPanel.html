@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Covid Registration System</title>
+
+    <div th:replace="fragments/stylesheets :: stylesheets"></div>
+</head>
+
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="container py-4">
+        <!-- <img src="https://c.tenor.com/kWW3pMOGDPIAAAAC/sakuramiko35-miko35.gif" alt="Flowers" width=200 height=200> -->
+        <table class="table">
+            <tbody class="thead-dark">
+                <tr>
+                    <th>BOOKING ID</th>
+                    <th>CUSTOMER ID</th>
+                    <th>CUSTOMER NAME</th>
+                    <th>SMSPIN</th>
+                    <th>STATUS</th>
+                    <th>TESTING-SITE</th>
+                    <th>STARTTIME</th>
+                    <th>ACTION</th>
+                </tr>
+                <tr th:each="booking: ${bookings}">
+                    <td th:text="${booking.bookingId}" />
+                    <td th:text="${booking.customerId}" />
+                    <td th:text="${booking.customerName}" />
+                    <td th:text="${booking.smsPin}" />
+                    <!--            <td th:text="${booking.startTime}" />-->
+                    <td th:text="${booking.status}" />
+                    <td>
+                        <!--            <select th:attr="onchange=|upload('${booking.bookingId}','${booking.status}')|" >-->
+                        <select th:attr="onchange=${'upload('+ '''' +booking.bookingId + '''' + ')'}"
+                            th:id="'hi'+${booking.bookingId}"
+                            th:disabled="${booking.status.equals('CANCELLED')} ? 'true' : 'false'">
+                            <option disabled selected value> -- select an option -- </option>
+                            <option th:each="testSite : ${testingSiteList}" th:value="${testSite.id}"
+                                th:text="${testSite.name}"
+                                th:selected="${testSite.id} == ${booking.getTestingSiteId()}" />
+                        </select>
+
+                    </td>
+
+                    <td><input type="datetime-local" class="form-control" th:value="${booking.startTime}"
+                            th:attr="onchange=${'upload1('+ '''' +booking.bookingId + '''' + ')'}"
+                            th:id="'ti'+${booking.bookingId}"
+                            th:disabled="${booking.status.equals('CANCELLED')} ? 'true' : 'false'"></td>
+
+                    <td>
+                        <a th:href="@{/adminPanelDelete/{id}(id=${booking.bookingId})}"
+                            class="btn btn-primary">DELETE</a>
+                    <td>
+                    <td>
+                        <a th:href="@{/adminPanelCancel/{id}/status/CANCELED(id=${booking.bookingId})}"
+                            class="btn btn-primary"
+                            th:style="${booking.status.equals('CANCELLED')} ? 'display:none' : 'display:block'">CANCEL</a>
+                    <td>
+                    <td>
+                        <a th:href="@{/adminPanelModified/{id}/testing-site/testsiteID/bookingTime/date(id=${booking.bookingId})}"
+                            class="btn btn-primary" th:id="'bt'+${booking.bookingId}" style="display:none">Modified</a>
+                    <td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <script th:inline="javascript">
+        function upload(text) {
+            // alert("booking id: " + text)
+            let testSiteId = document.getElementById("hi" + text).value
+            // alert(testSiteId)
+
+            // change href
+            let y = document.getElementById("bt" + text)
+            let z = document.getElementById("bt" + text).href
+            y.href = z.replace(/testsiteID/g, testSiteId);
+
+            // show btn
+            y.style.display = "block"
+        }
+
+        function upload1(text) {
+            // alert("booking id: " + text)
+            let time = document.getElementById("ti" + text).value
+            // alert(time)
+
+            // change href
+            let y = document.getElementById("bt" + text)
+            let z = document.getElementById("bt" + text).href
+            y.href = z.replace(/date/g, time);
+
+            // show btn
+            y.style.display = "block"
+        }
+    </script>
+
+    <div th:replace="fragments/scripts :: scripts"></div>
+
+</body>

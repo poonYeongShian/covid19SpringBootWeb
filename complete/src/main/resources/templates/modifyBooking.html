@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Covid Registration System</title>
+
+    <div th:replace="fragments/stylesheets :: stylesheets"></div>
+</head>
+
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="container py-4">
+        <form name='f' th:action="@{/modify}" th:object="${bookingForm}" method='POST'>
+
+            <input type="hidden" class="form-control" id="bookingID" name="bookingID"
+                th:value="${booking.getBookingId()}">
+
+            <table class="table">
+                <tbody class="thead-dark">
+                    <tr>
+                        <th>Customer Name</th>
+                        <td th:text="${booking.getCustomerName()}"></td>
+                    </tr>
+                    <tr>
+                        <th>Testing Site Name</th>
+                        <td>
+                            <h6 th:text=" ${error} ? ${error} : '' " class=" ${error} ? text-danger : '' "></h6>
+                            <select name="testingSite" id="testingSite" class="custom-select my-1 mr-sm-2" required>
+                                <option th:each="testSite : ${testingSiteList}" th:value="${testSite.id}"
+                                    th:text="${testSite.name}"
+                                    th:selected="${testSite.id} == ${booking.getTestingSiteId()}">
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Start Time</th>
+                        <td>
+                            <h6 th:text=" ${error} ? ${error} : '' " class=" ${error} ? text-danger : '' "></h6>
+                            <h6 th:text=" ${error2} ? ${error2} : '' " class=" ${error2} ? text-danger : '' "></h6>
+                            <input type="datetime-local" id="time" name="time" class="form-control"
+                                th:min="${currentDateTime}" th:value="${currentDateTime}" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Booking Status</th>
+                        <td th:text="${booking.getStatus()}"></td>
+                    </tr>
+                    <tr>
+                        <th>Covid Test Status</th>
+                        <td th:text="${booking.getTestingDone()} ? 'Completed' : 'Not Completed'"></td>
+                    </tr>
+                    <tr th:if="${not booking.getModifiedTimestamp().isEmpty()}">
+                        <th>Timestamp of modifications</th>
+                        <td>
+                            <span th:text="${booking.getFormattedModifiedTimestamp()}"></span>
+                            <a th:href="@{/revert/{id}(id=${booking.getBookingId()})}"
+                                class="btn btn-primary float-right">
+                                Revert
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h6 th:text=" ${error3} ? ${error3} : '' " class=" ${error3} ? text-danger : '' "></h6>
+            <button type="submit" class="btn btn-primary float-right">
+                Modify
+            </button>
+        </form>
+        <a th:href="@{/cancel/{id}(id=${booking.getBookingId()})}" class="btn btn-primary">
+            Cancel
+        </a>
+    </div>
+    <div th:replace="fragments/scripts :: scripts"></div>
+</body>
+
+</html>

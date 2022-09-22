@@ -1,0 +1,5 @@
+.navbar-brand:hover,
+.nav-link:hover {
+    background-color: #555;
+    transition: all 0.25s ease-in-out;
+}

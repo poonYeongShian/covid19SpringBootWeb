@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Covid Registration System</title>
+
+    <div th:replace="fragments/stylesheets :: stylesheets"></div>
+</head>
+
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <div class="container py-4">
+
+        <h1 class="text-center">Past Bookings</h1>
+
+        <table class="table">
+            <thead class="thead-dark">
+                <th scope="col">Timestamp</th>
+                <th scope="col">Testing Site</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">Action</th>
+            </thead>
+            <tbody th:each="pastBooking : ${booking.getPastBookings()}">
+                <tr>
+                    <td th:text="${pastBooking.getFormattedTimestamp()}"></td>
+                    <td th:text="${pastBooking.getTestingSiteName()}" th:value="${pastBooking.getTestingSiteId()}"></td>
+                    <td th:text="${pastBooking.getFormattedStartTime()}"></td>
+                    <td>
+                        <form action="f" th:action="@{/revertBooking}" th:object="${revertBookingForm}" method="POST">
+                            <input type="hidden" class="form-control" id="bookingId" name="bookingId"
+                                th:value="${booking.getBookingId()}">
+                            <input type="hidden" class="form-control" id="timestamp" name="timestamp"
+                                th:value="${pastBooking.getTimestamp()}">
+                            <button type="submit" class="btn btn-primary">Choose</button>
+                        </form>
+                        <!-- <a th:href="@{/selectRevert/{timestamp}(timestamp=${pastBooking.getTimestamp()})}"
+                            class="btn btn-primary">Choose</a> -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:replace="fragments/scripts :: scripts"></div>
+</body>
+
+</html>

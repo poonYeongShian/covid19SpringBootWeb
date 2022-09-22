@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Covid Registration System</title>
+
+    <div th:replace="fragments/stylesheets :: stylesheets"></div>
+</head>
+
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="container py-4">
+        <form name='f' th:action="@{/verifyBookingId}" th:object="${phoneCallForm}" method='POST' class="mt-4">
+            <label for="bookingId">Please enter your Booking ID</label>
+            <h6 th:text=" ${error} ? ${error} : '' " class="${error} ? text-danger : '' "></h6>
+            <input type='text' name='bookingId' value='' th:value="${bookingId}" class=" form-control"
+                placeholder="e.g. 954a5bfa-e37e-47d8-b195-60289a7672f6" required>
+            <button type="submit" class="btn btn-primary mt-4">Submit</button>
+        </form>
+
+        <h4 class="mt-4">OR</h4>
+
+        <form name='f' th:action="@{/verifyPINCode}" th:object="${phoneCallForm}" method='POST' class="mt-4">
+            <label for="pinCode">Please enter your PIN Code</label>
+            <h6 th:text=" ${error2} ? ${error2} : '' " class="${error2} ? text-danger : '' "></h6>
+            <input type='text' name='pinCode' value='' th:value="${pinCode}" class=" form-control"
+                placeholder="e.g. 123456" required>
+            <button type="submit" class="btn btn-primary mt-4">Submit</button>
+        </form>
+    </div>
+    <div th:replace="fragments/scripts :: scripts"></div>
+</body>
+
+</html>

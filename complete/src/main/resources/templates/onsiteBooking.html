@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Covid Registration System</title>
+
+    <div th:replace="fragments/stylesheets :: stylesheets"></div>
+</head>
+
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="container py-4">
+        <h1>Onsite Booking</h1>
+        <form name='f' th:action="@{/register}" th:object="${bookingForm}" method='POST'>
+            <table class="table">
+                <tr>
+                    <td>Customer:</td>
+                    <td>
+                        <select th:field="*{customerUsername}" class="custom-select my-1 mr-sm-2" required>
+                            <option th:each="user : ${userList}" th:value="${user.getId()}"
+                                th:text="${user.getFullName()}" />
+                        </select>
+                    <td>
+                </tr>
+                <tr>
+                    <td>Testing-sites:</td>
+                    <td>
+                        <select th:field="*{testingSite}" class="custom-select my-1 mr-sm-2" required>
+                            <option th:each="testingSite : ${testingSiteList}" th:value="${testingSite.getId()}"
+                                th:text="${testingSite.getName()}" />
+                        </select>
+                    <td>
+                </tr>
+                <tr>
+                    <td>Date/Time:</td>
+                    <td>
+                        <h6 th:text=" ${error} ? ${error} : '' " class="${error} ? text-danger : '' "></h6>
+                        <input type="datetime-local" id="birthdaytime" name="birthdaytime" th:field="*{time}"
+                            class="form-control" th:min="${todayDate}" required>
+                    <td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="btn btn-primary" name="submit" type="submit" value="submit" id="btn2"
+                            style="display:block" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="container">
+        <div class="vertical-center">
+            <button onclick="myFunction()" id="btn" style="display:none">Generate QR code</button>
+        </div>
+    </div>
+    <div style="text-align:center">
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" id="url"
+            style="display:none;text-decoration: underline overline; color: red">URL to connect for testing</a>
+        <img id="myQR" src="" />
+        <div id="qrRan"></div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script>
+        function makeRandomString(length) {
+            var result = '';
+            var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for (var i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() *
+                    charactersLength));
+            }
+            return result;
+        }
+
+        function myFunction() {
+            // Get the checkbox
+            var checkBox = document.getElementById("myCheck");
+            let randomString = makeRandomString(10)
+            let qrCodeApi = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + randomString
+
+            document.getElementById('qrcode').value = randomString
+            document.getElementById('qrRan').innerHTML = randomString
+            // If the checkbox is checked, display the output text
+            if (checkBox.checked == true) {
+                document.getElementById('myQR').src = qrCodeApi
+            }
+        }
+        function myFunction1() {
+            var x = document.getElementById("btn");
+            var y = document.getElementById("url");
+            var z = document.getElementById("btn2");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+                y.style.display = "block";
+                z.style.display = "none";
+            } else {
+                x.style.display = "none";
+                y.style.display = "none";
+                z.style.display = "block";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

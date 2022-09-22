@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Covid Registration System</title>
+
+    <div th:replace="fragments/stylesheets :: stylesheets"></div>
+</head>
+
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <div class="container py-4">
+        <table class="table">
+            <thead class="thead-dark">
+                <th scope="col">Booking ID</th>
+                <th scope="col">Booking PIN</th>
+                <th scope="col">Booking Status</th>
+                <th scope="col">Testing Site Name</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">Action</th>
+            </thead>
+            <tbody th:each="booking : ${bookingList}">
+                <tr>
+                    <td th:text="${booking.getBookingId()}"></td>
+                    <td th:text="${booking.getSmsPin()}"></td>
+                    <td th:text="${booking.getStatus()}"></td>
+                    <td th:text="${booking.getTestingSiteName()}"></td>
+                    <td th:text="${booking.getFormattedStartTime()}"></td>
+                    <td>
+                        <div th:switch="${booking.getTestingDone()}">
+                            <h6 th:case="true" class="text-danger">Covid Test is Completed</h6>
+                        </div>
+                        <div th:switch="${booking.getCancelBooking()}">
+                            <h6 th:case="true" class="text-danger">Booking is Cancelled</h6>
+                        </div>
+                        <div th:switch="${booking.getLapsedBooking()}">
+                            <h6 th:case="true" class="text-danger">Booking is Lapsed</h6>
+                        </div>
+                        <div
+                            th:if="(!${booking.getTestingDone()} and !${booking.getCancelBooking()} and !${booking.getLapsedBooking()})">
+                            <a th:href="@{/modify/{id}(id=${booking.getBookingId()})}" class="btn btn-primary">View</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:replace="fragments/scripts :: scripts"></div>
+</body>
+
+</html>
